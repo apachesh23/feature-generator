@@ -1,6 +1,5 @@
 // src/redux/ExperienceList/actions/experienceListActions.js
 export const addItem = (blockType, itemId, defaultOptions) => {
-    console.log('addItem action: Preparing to dispatch ADD_ITEM with:', { blockType, itemId, defaultOptions });
     return {
       type: 'ADD_ITEM',
       payload: { blockType, itemId, defaultOptions },

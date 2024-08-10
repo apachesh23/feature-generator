@@ -14,9 +14,7 @@ const DataBlock = ({ title, blockType }) => {
   const handleAddItem = (itemId) => {
     const newItem = config.items.find(item => item.id === itemId);
     if (newItem) {
-      console.log('DataBlock: Adding item:', newItem);
-      console.log('DataBlock: defaultOptions before dispatch:', newItem.defaultOptions);
-      dispatch(addItem(blockType, itemId, [...newItem.defaultOptions]));  // Передаем копию defaultOptions
+      dispatch(addItem(blockType, itemId, newItem.defaultOptions));
     }
   };
 
@@ -24,15 +22,13 @@ const DataBlock = ({ title, blockType }) => {
     dispatch(removeItem(blockType, itemId));
   };
 
-  console.log('DataBlock: Current items:', currentItems);
-
   return (
     <Paper className={styles.dataBlock}>
       <div className={styles.header}>
         <Title order={6} weight={400}>
           {title}
         </Title>
-        <AddItemButton onAddItem={handleAddItem} items={config.items} />  {/* Передаем список элементов */}
+        <AddItemButton onAddItem={handleAddItem} items={config.items} blockType={blockType} />  {/* Передаем blockType */}
       </div>
       <Box p="md" className={styles.content}>
         {currentItems.map((item, index) => (
@@ -43,6 +39,8 @@ const DataBlock = ({ title, blockType }) => {
             options={config.options}  // Передаем полный список опций
             defaultOptions={item.options}  // Используем options из состояния Redux
             onRemove={() => handleRemoveItem(item.id)} 
+            blockType={blockType}  // Передаем blockType
+            itemId={item.id}  // Передаем itemId
           />
         ))}
       </Box>

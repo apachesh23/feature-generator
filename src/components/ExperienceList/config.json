@@ -9,13 +9,13 @@
       {
         "id": "ar",
         "title": "AR",
-        "icon": "IconAugmentedReality",
+        "icon": "IconAugmentedReality2",
         "defaultOptions": ["arImage", "arCamera"]
       },
       {
         "id": "compare",
         "title": "Compare",
-        "icon": "IconCompare",
+        "icon": "IconRuler",
         "defaultOptions": ["product", "history"]
       },
       {
@@ -27,19 +27,19 @@
       {
         "id": "stagingRoom",
         "title": "Staging Room",
-        "icon": "IconBuilding",
+        "icon": "IconArmchair2",
         "defaultOptions": ["stagingRoom"]
       },
       {
         "id": "stackable",
         "title": "Stackable",
-        "icon": "IconLayersDifference",
+        "icon": "IconStack2",
         "defaultOptions": ["catalogItems"]
       },
       {
         "id": "willItFit",
         "title": "Will It Fit",
-        "icon": "IconRuler",
+        "icon": "IconBriefcase",
         "defaultOptions": ["willItFit"]
       },
       {

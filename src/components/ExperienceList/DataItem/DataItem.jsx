@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Accordion, Paper, Checkbox, Group, Text, Box, CloseButton } from '@mantine/core';
 import * as TablerIcons from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { updateItemOptions } from '../../../redux/actions/experienceListActions';
 
-const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
-  // Преобразуем defaultOptions обратно в массив ключей
-  const defaultOptionKeys = Object.keys(defaultOptions);
-  console.log('DataItem: Converted defaultOptions to array:', defaultOptionKeys);
+const DataItem = ({ title, icon, options, defaultOptions = [], onRemove, blockType, itemId }) => {
+  const dispatch = useDispatch();
 
   // Инициализируем активные параметры из defaultOptions
   const [checkedItems, setCheckedItems] = useState(
     options.reduce((acc, option) => {
-      acc[option] = defaultOptionKeys.includes(option); // Устанавливаем true для параметров из defaultOptions
+      acc[option] = defaultOptions[option] || false;
       return acc;
     }, {})
   );
@@ -19,7 +19,14 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
   const [showCloseButton, setShowCloseButton] = useState(false);
   const accordionRef = useRef(null);
 
-  // Получаем компонент иконки из Tabler Icons
+  // Логирование изменений состояния checkedItems
+  useEffect(() => {
+    console.log('DataItem: dispatching updateItemOptions with:', { blockType, itemId, checkedItems });
+    if (blockType && itemId) {
+      dispatch(updateItemOptions(blockType, itemId, checkedItems));
+    }
+  }, [checkedItems, blockType, itemId, dispatch]);
+
   const IconComponent = TablerIcons[icon];
 
   const handleToggleAccordion = () => {
@@ -59,7 +66,7 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
   };
 
   const renderInactiveCheckboxes = () => {
-    return Object.keys(checkedItems)
+    return options
       .filter((item) => !checkedItems[item]) // Отображаем только неактивные параметры
       .map((item, index) => (
         <Checkbox
@@ -80,7 +87,6 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
       onMouseEnter={() => setShowCloseButton(true)} 
       onMouseLeave={() => setShowCloseButton(false)}
     >
-      {/* Заголовок с иконкой */}
       <Group 
         position="apart" 
         style={{ 
@@ -101,7 +107,6 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
         )}
       </Group>
 
-      {/* Блок с активными галочками */}
       <Box 
         style={{ 
           padding: '8px 16px', 
@@ -114,7 +119,6 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
         {renderActiveCheckboxes()}
       </Box>
 
-      {/* Аккордеон для выбора оставшихся пунктов */}
       <div ref={accordionRef} onMouseLeave={handleMouseLeaveAccordion}>
         <Accordion value={opened ? 'addMore' : null} variant="contained">
           <Accordion.Item value="addMore">
@@ -127,7 +131,7 @@ const DataItem = ({ title, icon, options, defaultOptions = {}, onRemove }) => {
               </Text>
             </Accordion.Control>
             <Accordion.Panel>
-              {renderInactiveCheckboxes()} {/* Отображаем все параметры из options */}
+              {renderInactiveCheckboxes()}
             </Accordion.Panel>
           </Accordion.Item>
         </Accordion>
