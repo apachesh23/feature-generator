@@ -1,0 +1,67 @@
+{
+    "items": [
+      {
+        "id": "model",
+        "title": "Model",
+        "icon": "IconBox",
+        "defaultOptions": ["viewIn2DContext", "multiProduct"]
+      },
+      {
+        "id": "ar",
+        "title": "AR",
+        "icon": "IconAugmentedReality",
+        "defaultOptions": ["arImage", "arCamera"]
+      },
+      {
+        "id": "compare",
+        "title": "Compare",
+        "icon": "IconCompare",
+        "defaultOptions": ["product", "history"]
+      },
+      {
+        "id": "roomView",
+        "title": "Room View",
+        "icon": "IconHome",
+        "defaultOptions": ["viewIn3DContext"]
+      },
+      {
+        "id": "stagingRoom",
+        "title": "Staging Room",
+        "icon": "IconBuilding",
+        "defaultOptions": ["stagingRoom"]
+      },
+      {
+        "id": "stackable",
+        "title": "Stackable",
+        "icon": "IconLayersDifference",
+        "defaultOptions": ["catalogItems"]
+      },
+      {
+        "id": "willItFit",
+        "title": "Will It Fit",
+        "icon": "IconRuler",
+        "defaultOptions": ["willItFit"]
+      },
+      {
+        "id": "wishlist",
+        "title": "Wishlist",
+        "icon": "IconHeart",
+        "defaultOptions": ["wishListItems"]
+      }
+    ],
+    "options": [
+      "viewIn3DContext",
+      "viewIn2DContext",
+      "multiProduct",
+      "stagingRoom",
+      "arImage",
+      "arCamera",
+      "product",
+      "history",
+      "human",
+      "catalogItems",
+      "wishListItems",
+      "willItFit"
+    ]
+  }
+  
