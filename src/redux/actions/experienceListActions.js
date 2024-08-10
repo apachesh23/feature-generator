@@ -6,7 +6,6 @@ export const addItem = (blockType, itemId, defaultOptions) => {
     };
   };
   
-
 export const removeItem = (blockType, itemId) => ({
     type: 'REMOVE_ITEM',
     payload: { blockType, itemId },
@@ -21,3 +20,9 @@ export const reorderItems = (blockType, reorderedItems) => ({
     type: 'REORDER_ITEMS',
     payload: { blockType, reorderedItems },
 });
+
+export const toggleFavorite = (blockType, itemId) => ({
+    type: 'TOGGLE_FAVORITE',
+    payload: { blockType, itemId },
+  });
+  

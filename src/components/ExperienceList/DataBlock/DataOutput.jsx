@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Paper, Text } from '@mantine/core';
+import { Paper, Text, Title } from '@mantine/core';
+import { IconClipboardList } from '@tabler/icons-react'; // Импорт иконки
 import styles from './DataBlock.module.css';
 
 const DataOutput = ({ title }) => {
@@ -12,7 +13,6 @@ const DataOutput = ({ title }) => {
     console.log('DataOutput: desktopItems изменились:', desktopItems);
     console.log('DataOutput: mobileItems изменились:', mobileItems);
   }, [desktopItems, mobileItems]);
-  
 
   const renderItems = (items, blockType) => {
     return items.map((item, index) => (
@@ -30,9 +30,10 @@ const DataOutput = ({ title }) => {
   return (
     <Paper className={styles.dataBlock}>
       <div className={styles.header}>
-        <Text size="xs" weight={700}>
+        <Title order={6} weight={400} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Roboto Mono, monospace' }}>
+          <IconClipboardList size={20} stroke={1} />
           {title}
-        </Text>
+        </Title>
       </div>
       <div style={{ padding: '10px' }}>
         <Text size="xs" weight={500}>Desktop Items:</Text>

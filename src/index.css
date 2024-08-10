@@ -16,6 +16,11 @@ h1 {
   padding: 0px;
 }
 
-html {
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   font-size: 16px;
+  color: #332C2C;
 }

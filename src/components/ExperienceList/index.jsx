@@ -14,9 +14,9 @@ const ExperienceList = () => {
       }}
     >
       <div style={{ display: 'flex', gap: '20px' }}>
-        <DataBlock title="DesktopData" blockType="desktopItems" />
-        <DataBlock title="MobileData" blockType="mobileItems" />
-        <DataOutput title="OutputData" />
+        <DataBlock title="Desktop" blockType="desktopItems" />
+        <DataBlock title="Mobile" blockType="mobileItems" />
+        <DataOutput title="Output" />
       </div>
     </Box>
   );
