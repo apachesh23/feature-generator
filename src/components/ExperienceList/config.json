@@ -62,6 +62,31 @@
       "catalogItems",
       "wishListItems",
       "willItFit"
-    ]
-  }
-  
+    ],
+    "presets": {
+        "preset1": {
+        "title": "Model + AR",
+        "items": ["model", "ar"]
+        },
+        "preset2": {
+        "title": "Model + Compare",
+        "items": ["model", "compare"]
+        },
+        "preset3": {
+        "title": "Model + AR + Compare",
+        "items": ["model", "ar", "compare"]
+        },
+        "preset4": {
+        "title": "WFI + AR + Compare",
+        "items": ["willItFit", "ar", "compare"]
+        },
+        "preset5": {
+        "title": "Room + Design + AR + Compare",
+        "items": ["roomView", "stagingRoom", "ar", "compare"]
+        },
+        "preset6": {
+        "title": "Room + Design + Compare",
+        "items": ["roomView", "stagingRoom", "compare"]
+        }
+    }
+}

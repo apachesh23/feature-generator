@@ -25,4 +25,9 @@ export const toggleFavorite = (blockType, itemId) => ({
     type: 'TOGGLE_FAVORITE',
     payload: { blockType, itemId },
   });
+
+export const applyPreset = (presetId, blockType) => ({
+    type: 'APPLY_PRESET',
+    payload: { presetId, blockType }
+});
   

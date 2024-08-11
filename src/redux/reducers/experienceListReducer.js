@@ -93,6 +93,44 @@ const experienceListReducer = (state = initialState, action) => {
           : { ...state, mobileItems: updatedItems };
     }
     
+    case 'APPLY_PRESET': {
+        const { presetId, blockType } = action.payload;
+        const preset = config.presets[presetId];
+  
+        if (!preset) {
+          console.error(`Preset with ID ${presetId} not found`);
+          return state;
+        }
+  
+        const presetItems = preset.items; // Получаем массив items
+  
+        // Формируем новые элементы для блока
+        const newItems = presetItems.map(itemId => {
+          const itemConfig = config.items.find(item => item.id === itemId);
+          if (!itemConfig) {
+            console.error(`Item with ID ${itemId} not found in config`);
+            return null;
+          }
+  
+          return {
+            id: itemId,
+            title: itemConfig.title,
+            icon: itemConfig.icon,
+            options: (itemConfig.defaultOptions || []).reduce((acc, option) => {
+              acc[option] = true;
+              return acc;
+            }, {}),
+            isFavorite: false,  // Добавляем isFavorite по умолчанию false
+          };
+        }).filter(item => item !== null); // Фильтруем элементы, которые не были найдены
+  
+        // Обновляем состояние с новыми элементами
+        return {
+          ...state,
+          [blockType]: newItems
+        };
+      }
+
     default:
       return state;
   }
