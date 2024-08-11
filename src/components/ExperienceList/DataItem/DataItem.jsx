@@ -3,6 +3,7 @@ import { Accordion, Paper, Checkbox, Group, Text, Box, CloseButton, Tooltip } fr
 import * as TablerIcons from '@tabler/icons-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateItemOptions, toggleFavorite } from '../../../redux/actions/experienceListActions';
+import styles from './DataItem.module.css';
 
 const DataItem = ({ title, icon, options, defaultOptions = [], onRemove, blockType, itemId }) => {
   const dispatch = useDispatch();
@@ -52,9 +53,12 @@ const DataItem = ({ title, icon, options, defaultOptions = [], onRemove, blockTy
     }));
   };
 
-  const handleFavoriteToggle = () => {
+  const handleFavoriteToggle = (event) => {
+    event.preventDefault(); // Предотвращаем дефолтное действие браузера
+    event.stopPropagation(); // Останавливаем распространение события
     dispatch(toggleFavorite(blockType, itemId));
   };
+  
 
   const renderActiveCheckboxes = () => {
     return Object.keys(checkedItems)
@@ -120,8 +124,10 @@ const DataItem = ({ title, icon, options, defaultOptions = [], onRemove, blockTy
           transitionProps={{ transition: 'pop', duration: 300 }}
           >
           <StarIcon 
-            size={18} 
+            size={18}
+            className="no-drag is-favorite"
             onClick={handleFavoriteToggle} 
+            draggable="false"  // Отключаем драг
             style={{ cursor: 'pointer', color: starColor, marginRight: 8 }} 
           />   
         </Tooltip>
@@ -150,7 +156,7 @@ const DataItem = ({ title, icon, options, defaultOptions = [], onRemove, blockTy
           borderRadius: '4px'
         }}
       >
-        <Text size="xs" weight={500} style={{ marginBottom: '8px', color: 'gray' }}>
+        <Text size="xs" weight={500} className="no-drag" style={{ marginBottom: '8px', color: 'gray' }}>
           Active parameters
         </Text>
           {renderActiveCheckboxes()}

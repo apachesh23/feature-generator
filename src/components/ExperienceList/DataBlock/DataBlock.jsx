@@ -1,12 +1,13 @@
 import React from 'react';
 import { Paper, Title, Box, ScrollArea } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconDevices2, IconDeviceMobile, IconClipboardList } from '@tabler/icons-react'; // Импорт иконок
+import { IconDevices2, IconDeviceMobile } from '@tabler/icons-react';
+import { List, arrayMove } from 'react-movable';
 import styles from './DataBlock.module.css';
 import DataItem from '../DataItem/DataItem';
 import AddItemButton from '../AddItemButton/AddItemButton';
-import config from '../config.json';  // Импорт конфигурации
-import { addItem, removeItem } from '../../../redux/actions/experienceListActions'; // Импорт действий из Redux
+import config from '../config.json';
+import { addItem, removeItem, reorderItems } from '../../../redux/actions/experienceListActions';
 
 const DataBlock = ({ title, blockType }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,11 @@ const DataBlock = ({ title, blockType }) => {
     dispatch(removeItem(blockType, itemId));
   };
 
-  // Определяем иконку в зависимости от blockType
+  const handleSortEnd = ({ oldIndex, newIndex }) => {
+    const reorderedItems = arrayMove(currentItems, oldIndex, newIndex);
+    dispatch(reorderItems(blockType, reorderedItems));
+  };
+
   const renderIcon = () => {
     switch (blockType) {
       case 'desktopItems':
@@ -46,22 +51,39 @@ const DataBlock = ({ title, blockType }) => {
           {renderIcon()}
           {title}
         </Title>
-        <AddItemButton onAddItem={handleAddItem} items={config.items} blockType={blockType} />  {/* Передаем blockType */}
+        <AddItemButton onAddItem={handleAddItem} items={config.items} blockType={blockType} />
       </div>
       <ScrollArea style={{ height: '530px' }} offsetScrollbars scrollbarSize={4}>
         <Box p="md" className={styles.content}>
-          {currentItems.map((item, index) => (
-            <DataItem 
-              key={index} 
-              title={item.title} 
-              icon={item.icon}  
-              options={config.options}  // Передаем полный список опций
-              defaultOptions={item.options}  // Используем options из состояния Redux
-              onRemove={() => handleRemoveItem(item.id)} 
-              blockType={blockType}  // Передаем blockType
-              itemId={item.id}  // Передаем itemId
-            />
-          ))}
+          <List
+            values={currentItems}
+            onChange={({ oldIndex, newIndex }) => handleSortEnd({ oldIndex, newIndex })}
+            lockVertically
+            renderList={({ children, props }) => <div {...props}>{children}</div>}
+            renderItem={({ value, props, index }) => (
+              <div
+                {...props}
+                key={value.id}
+                onPointerDown={(event) => {
+                  const isStar = event.target.closest('.is-favorite');
+                  if (isStar) {
+                    event.preventDefault(); // Предотвращаем драг
+                    event.stopPropagation(); // Останавливаем распространение события
+                  }
+                }}
+              >
+                <DataItem 
+                  title={value.title} 
+                  icon={value.icon}  
+                  options={config.options}
+                  defaultOptions={value.options}
+                  onRemove={() => handleRemoveItem(value.id)} 
+                  blockType={blockType}
+                  itemId={value.id}
+                />
+              </div>
+            )}
+          />
         </Box>
       </ScrollArea>
     </Paper>
