@@ -1,135 +1,116 @@
-import config from '../../components/ExperienceList/config.json';  // Импорт конфигурации
+// src/redux/reducers/experienceListReducer.js
+import config from '../../components/ExperienceList/config.json';
 
 const initialState = {
   desktopItems: [],
   mobileItems: [],
+  desktopActiveExperience: null,
+  mobileActiveExperience: null,
 };
 
 const experienceListReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_ITEM': {
-      const { blockType, itemId, defaultOptions } = action.payload;
-      const itemConfig = config.items.find(item => item.id === itemId);
-
-      if (!itemConfig) {
-        console.error(`experienceListReducer: Item with ID ${itemId} not found in config`);
-        return state;
-      }
-
+    case 'ADD_ITEM':
       const newItem = {
-        id: itemId,
-        title: itemConfig.title,
-        icon: itemConfig.icon,
-        options: (defaultOptions || []).reduce((acc, option) => {
-          acc[option] = true;
-          return acc;
-        }, {}),
-        isFavorite: false,  // Добавляем isFavorite по умолчанию false
+        ...action.payload.item,
+        selectedOptions: action.payload.item.defaultOptions || [],
       };
 
-      if (blockType === 'desktopItems') {
-        const newState = { ...state, desktopItems: [...state.desktopItems, newItem] };
-        return newState;
-      } else if (blockType === 'mobileItems') {
-        const newState = { ...state, mobileItems: [...state.mobileItems, newItem] };
-        return newState;
-      }
-      return state;
-    }
-
-    case 'REMOVE_ITEM': {
-      const { blockType, itemId } = action.payload;
-
-      if (blockType === 'desktopItems') {
-        const newState = { ...state, desktopItems: state.desktopItems.filter(item => item.id !== itemId) };
-        return newState;
-      } else if (blockType === 'mobileItems') {
-        const newState = { ...state, mobileItems: state.mobileItems.filter(item => item.id !== itemId) };
-        return newState;
-      }
-      return state;
-    }
-
-    case 'UPDATE_ITEM_OPTIONS': {
-      const { blockType, itemId, options } = action.payload;
-      console.log('experienceListReducer: UPDATE_ITEM_OPTIONS received:', action.payload);
-
-      const items = blockType === 'desktopItems' ? state.desktopItems : state.mobileItems;
-      const itemIndex = items.findIndex(item => item.id === itemId);
-
-      if (itemIndex !== -1) {
-        const updatedItems = [...items];
-        updatedItems[itemIndex] = { ...updatedItems[itemIndex], options };
-        console.log('experienceListReducer: Updated items:', updatedItems);
-        return blockType === 'desktopItems'
-          ? { ...state, desktopItems: updatedItems }
-          : { ...state, mobileItems: updatedItems };
-      }
-      return state;
-    }
-
-    case 'REORDER_ITEMS': {
-      const { blockType, reorderedItems } = action.payload;
-
-      const newState = blockType === 'desktopItems'
-        ? { ...state, desktopItems: reorderedItems }
-        : { ...state, mobileItems: reorderedItems };
-
-      return newState;
-    }
-
-    case 'TOGGLE_FAVORITE': {
-        const { blockType, itemId } = action.payload;
-    
-        const items = blockType === 'desktopItems' ? state.desktopItems : state.mobileItems;
-    
-        const updatedItems = items.map(item => ({
-          ...item,
-          isFavorite: item.id === itemId ? !item.isFavorite : false,
-        }));
-    
-        return blockType === 'desktopItems'
-          ? { ...state, desktopItems: updatedItems }
-          : { ...state, mobileItems: updatedItems };
-    }
-    
-    case 'APPLY_PRESET': {
-        const { presetId, blockType } = action.payload;
-        const preset = config.presets[presetId];
-  
-        if (!preset) {
-          console.error(`Preset with ID ${presetId} not found`);
-          return state;
-        }
-  
-        const presetItems = preset.items; // Получаем массив items
-  
-        // Формируем новые элементы для блока
-        const newItems = presetItems.map(itemId => {
-          const itemConfig = config.items.find(item => item.id === itemId);
-          if (!itemConfig) {
-            console.error(`Item with ID ${itemId} not found in config`);
-            return null;
-          }
-  
-          return {
-            id: itemId,
-            title: itemConfig.title,
-            icon: itemConfig.icon,
-            options: (itemConfig.defaultOptions || []).reduce((acc, option) => {
-              acc[option] = true;
-              return acc;
-            }, {}),
-            isFavorite: false,  // Добавляем isFavorite по умолчанию false
-          };
-        }).filter(item => item !== null); // Фильтруем элементы, которые не были найдены
-  
-        // Обновляем состояние с новыми элементами
+      if (action.payload.containerType === 'desktop') {
         return {
           ...state,
-          [blockType]: newItems
+          desktopItems: [...state.desktopItems, newItem],
+        };
+      } else if (action.payload.containerType === 'mobile') {
+        return {
+          ...state,
+          mobileItems: [...state.mobileItems, newItem],
         };
       }
+      return state;
+
+    case 'REMOVE_ITEM':
+      if (action.payload.containerType === 'desktop') {
+        const updatedDesktopItems = state.desktopItems.filter(item => item.id !== action.payload.itemId);
+        return {
+          ...state,
+          desktopItems: updatedDesktopItems,
+          desktopActiveExperience: state.desktopActiveExperience === action.payload.itemId ? null : state.desktopActiveExperience,
+        };
+      } else if (action.payload.containerType === 'mobile') {
+        const updatedMobileItems = state.mobileItems.filter(item => item.id !== action.payload.itemId);
+        return {
+          ...state,
+          mobileItems: updatedMobileItems,
+          mobileActiveExperience: state.mobileActiveExperience === action.payload.itemId ? null : state.mobileActiveExperience,
+        };
+      }
+      return state;
+
+    case 'TOGGLE_ITEM_OPTION':
+      const updateItems = (items) =>
+        items.map((item) =>
+          item.id === action.payload.itemId
+            ? {
+                ...item,
+                selectedOptions: action.payload.checked
+                  ? [...item.selectedOptions, action.payload.option]
+                  : item.selectedOptions.filter(option => option !== action.payload.option),
+              }
+            : item
+        );
+
+      if (action.payload.containerType === 'desktop') {
+        return {
+          ...state,
+          desktopItems: updateItems(state.desktopItems),
+        };
+      } else if (action.payload.containerType === 'mobile') {
+        return {
+          ...state,
+          mobileItems: updateItems(state.mobileItems),
+        };
+      }
+      return state;
+
+    case 'SET_ITEMS':
+      if (action.itemType === 'desktop') {
+        return {
+          ...state,
+          desktopItems: action.payload,
+          desktopActiveExperience: null, // Сбрасываем активный опыт
+        };
+      } else if (action.itemType === 'mobile') {
+        return {
+          ...state,
+          mobileItems: action.payload,
+          mobileActiveExperience: null, // Сбрасываем активный опыт
+        };
+      }
+      return state;
+
+    case 'RESET_ITEMS':
+      return {
+        ...state,
+        desktopItems: [],
+        mobileItems: [],
+        desktopActiveExperience: null,
+        mobileActiveExperience: null,
+      };
+
+    case 'TOGGLE_ACTIVE_EXPERIENCE':
+      if (action.payload.containerType === 'desktop') {
+        return {
+          ...state,
+          desktopActiveExperience: state.desktopActiveExperience === action.payload.itemId ? null : action.payload.itemId,
+        };
+      } else if (action.payload.containerType === 'mobile') {
+        return {
+          ...state,
+          mobileActiveExperience: state.mobileActiveExperience === action.payload.itemId ? null : action.payload.itemId,
+        };
+      }
+      return state;
 
     default:
       return state;

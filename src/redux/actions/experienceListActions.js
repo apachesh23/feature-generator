@@ -1,33 +1,34 @@
-// src/redux/ExperienceList/actions/experienceListActions.js
-export const addItem = (blockType, itemId, defaultOptions) => {
-    return {
-      type: 'ADD_ITEM',
-      payload: { blockType, itemId, defaultOptions },
-    };
+// src/redux/actions/experienceListActions.js
+import config from '../../components/ExperienceList/config.json';
+
+export const addItem = (item, containerType) => ({
+  type: 'ADD_ITEM',
+  payload: { item, containerType },
+});
+
+export const removeItem = (itemId, containerType) => ({
+  type: 'REMOVE_ITEM',
+  payload: { itemId, containerType },
+});
+
+export const toggleItemOption = (itemId, option, checked, containerType) => ({
+  type: 'TOGGLE_ITEM_OPTION',
+  payload: { itemId, option, checked, containerType },
+});
+
+export const setItems = (items, type) => {
+  return {
+    type: 'SET_ITEMS',
+    payload: items,
+    itemType: type,
   };
-  
-export const removeItem = (blockType, itemId) => ({
-    type: 'REMOVE_ITEM',
-    payload: { blockType, itemId },
+};
+
+export const resetItems = () => ({
+  type: 'RESET_ITEMS',
 });
 
-export const updateItemOptions = (blockType, itemId, options) => ({
-    type: 'UPDATE_ITEM_OPTIONS',
-    payload: { blockType, itemId, options },
+export const toggleActiveExperience = (itemId, containerType) => ({
+  type: 'TOGGLE_ACTIVE_EXPERIENCE',
+  payload: { itemId, containerType },
 });
-
-export const reorderItems = (blockType, reorderedItems) => ({
-    type: 'REORDER_ITEMS',
-    payload: { blockType, reorderedItems },
-});
-
-export const toggleFavorite = (blockType, itemId) => ({
-    type: 'TOGGLE_FAVORITE',
-    payload: { blockType, itemId },
-  });
-
-export const applyPreset = (presetId, blockType) => ({
-    type: 'APPLY_PRESET',
-    payload: { presetId, blockType }
-});
-  

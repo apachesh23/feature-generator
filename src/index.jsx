@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { MantineProvider, createTheme } from '@mantine/core';
 import { store } from './redux/store.js';
-import App from './components/App.jsx';
+import App from './App.jsx';
 import '@mantine/core/styles.css';
 import './index.css';
 

@@ -1,92 +1,170 @@
 {
-    "items": [
-      {
-        "id": "model",
-        "title": "Model",
-        "icon": "IconBox",
-        "defaultOptions": ["viewIn2DContext", "multiProduct"]
-      },
-      {
-        "id": "ar",
-        "title": "AR",
-        "icon": "IconAugmentedReality2",
-        "defaultOptions": ["arImage", "arCamera"]
-      },
-      {
-        "id": "compare",
-        "title": "Compare",
-        "icon": "IconRuler",
-        "defaultOptions": ["product", "history"]
-      },
-      {
-        "id": "roomView",
-        "title": "Room View",
-        "icon": "IconHome",
-        "defaultOptions": ["viewIn3DContext"]
-      },
-      {
-        "id": "stagingRoom",
-        "title": "Staging Room",
-        "icon": "IconArmchair2",
-        "defaultOptions": ["stagingRoom"]
-      },
-      {
-        "id": "stackable",
-        "title": "Stackable",
-        "icon": "IconStack2",
-        "defaultOptions": ["catalogItems"]
-      },
-      {
-        "id": "willItFit",
-        "title": "Will It Fit",
-        "icon": "IconBriefcase",
-        "defaultOptions": ["willItFit"]
-      },
-      {
-        "id": "wishlist",
-        "title": "Wishlist",
-        "icon": "IconHeart",
-        "defaultOptions": ["wishListItems"]
-      }
-    ],
-    "options": [
-      "viewIn3DContext",
-      "viewIn2DContext",
-      "multiProduct",
-      "stagingRoom",
-      "arImage",
-      "arCamera",
-      "product",
-      "history",
-      "human",
-      "catalogItems",
-      "wishListItems",
-      "willItFit"
-    ],
-    "presets": {
-        "preset1": {
-        "title": "Model + AR",
-        "items": ["model", "ar"]
-        },
-        "preset2": {
-        "title": "Model + Compare",
-        "items": ["model", "compare"]
-        },
-        "preset3": {
-        "title": "Model + AR + Compare",
-        "items": ["model", "ar", "compare"]
-        },
-        "preset4": {
-        "title": "WFI + AR + Compare",
-        "items": ["willItFit", "ar", "compare"]
-        },
-        "preset5": {
-        "title": "Room + Design + AR + Compare",
-        "items": ["roomView", "stagingRoom", "ar", "compare"]
-        },
-        "preset6": {
-        "title": "Room + Design + Compare",
-        "items": ["roomView", "stagingRoom", "compare"]
-        }
+  "items": [
+    {
+      "id": "model",
+      "title": "Model",
+      "icon": "IconBox",
+      "defaultOptions": ["viewIn2DContext", "multiProduct"],
+      "json_name": "model"
+    },
+    {
+      "id": "ar",
+      "title": "AR",
+      "icon": "IconCamera",
+      "defaultOptions": ["arImage", "arCamera"],
+      "json_name": "ar"
+    },
+    {
+      "id": "arClip",
+      "title": "AR Clip",
+      "icon": "IconVideo",
+      "defaultOptions": ["arClip", "arCamera"],
+      "json_name": "ar"
+    },
+    {
+      "id": "compare",
+      "title": "Compare",
+      "icon": "IconRuler",
+      "defaultOptions": ["product", "history"],
+      "json_name": "compare"
+    },
+    {
+      "id": "roomView",
+      "title": "Room View",
+      "icon": "IconHome",
+      "defaultOptions": ["viewIn3DContext"],
+      "json_name": "roomView"
+    },
+    {
+      "id": "stagingRoom",
+      "title": "Staging Room",
+      "icon": "IconArmchair2",
+      "defaultOptions": ["stagingRoom"],
+      "json_name": "stagingRoom"
+    },
+    {
+      "id": "stackable",
+      "title": "Stackable",
+      "icon": "IconStack2",
+      "defaultOptions": ["catalogItems"],
+      "json_name": "stackable"
+    },
+    {
+      "id": "willItFit",
+      "title": "Will It Fit",
+      "icon": "IconBriefcase",
+      "defaultOptions": ["willItFit"],
+      "json_name": "willItFit"
+    },
+    {
+      "id": "deviceFit",
+      "title": "Device Fit",
+      "icon": "IconDevices",
+      "defaultOptions": ["deviceFit"],
+      "json_name": "deviceFit"
+    },
+    {
+      "id": "wishlist",
+      "title": "Wishlist",
+      "icon": "IconHeart",
+      "defaultOptions": ["wishListItems"],
+      "json_name": "wishlist"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "icon": "IconCancel",
+      "defaultOptions": [],
+      "json_name": "disabled"
     }
+  ],
+  "options": [
+    "viewIn3DContext",
+    "viewIn2DContext",
+    "multiProduct",
+    "stagingRoom",
+    "arImage",
+    "arClip",
+    "arCamera",
+    "product",
+    "history",
+    "human",
+    "catalogItems",
+    "wishListItems",
+    "willItFit",
+    "deviceFit",
+    "airlines",
+    "airlinesNavBar"
+  ],
+  "presets": {
+    "preset1": {
+      "title": "Model + AR",
+      "items": [
+        { "id": "model", "options": ["viewIn2DContext", "multiProduct"] },
+        { "id": "ar", "options": ["arImage", "arCamera"] }
+      ],
+      "activeExperience": "ar"
+    },
+    "preset2": {
+      "title": "Model + Compare",
+      "items": [
+        { "id": "model", "options": ["viewIn2DContext", "multiProduct"] },
+        { "id": "compare", "options": ["product", "history"] }
+      ],
+      "activeExperience": "model"
+    },
+    "preset3": {
+      "title": "Model + AR + Compare",
+      "items": [
+        { "id": "model", "options": ["viewIn2DContext", "multiProduct"] },
+        { "id": "ar", "options": ["arImage", "arCamera"] },
+        { "id": "compare", "options": ["product", "history"] }
+      ],
+      "activeExperience": "ar"
+    },
+    "preset4": {
+      "title": "Model + Clip + Compare",
+      "items": [
+        { "id": "model", "options": ["viewIn2DContext", "multiProduct"] },
+        { "id": "ar", "options": ["arClip", "arCamera"] },
+        { "id": "compare", "options": ["product", "history"] }
+      ],
+      "activeExperience": "ar"
+    },
+    "preset5": {
+      "title": "WIF + Compare",
+      "items": [
+        { "id": "willItFit", "options": ["willItFit"] },
+        { "id": "compare", "options": ["product", "history", "human"] }
+      ],
+      "activeExperience": "willItFit"
+    },
+    "preset6": {
+      "title": "Device + Compare",
+      "items": [
+        { "id": "deviceFit", "options": ["deviceFit"] },
+        { "id": "compare", "options": ["product", "history", "human"] }
+      ],
+      "activeExperience": "deviceFit"
+    },
+    "preset7": {
+      "title": "Room + Design + AR + Compare",
+      "items": [
+        { "id": "roomView", "options": ["viewIn3DContext"] },
+        { "id": "stagingRoom", "options": ["stagingRoom"] },
+        { "id": "ar", "options": ["arImage", "arCamera"] },
+        { "id": "compare", "options": ["product", "history", "human"] }
+      ],
+      "activeExperience": "ar"
+    },
+    "preset8": {
+      "title": "Room + Design + Compare",
+      "items": [
+        { "id": "roomView", "options": ["viewIn3DContext"] },
+        { "id": "stagingRoom", "options": ["stagingRoom"] },
+        { "id": "compare", "options": ["product", "history", "human"] }
+      ],
+      "activeExperience": "stagingRoom"
+    }
+  }
 }
