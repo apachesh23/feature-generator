@@ -1,7 +1,0 @@
-.no-drag {
-    pointer-events: auto; /* Разрешаем клики */
-    -webkit-user-drag: none; /* Отключаем драг в Webkit-браузерах */
-    user-select: none; /* Запрещаем выделение текста */
-    touch-action: none; /* Отключаем жесты касания */
-  }
-  
