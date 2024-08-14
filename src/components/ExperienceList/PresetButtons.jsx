@@ -31,9 +31,9 @@ const PresetButtons = ({ type }) => {
   };
 
   return (
-    <Group grow>
+    <Group justify="space-between" style={{ width: '100%' }}>
       {Object.keys(config.presets).map((presetKey) => (
-        <Button size="sm" variant="outline" style={{ fontSize: '12px' }} key={presetKey} onClick={() => handlePresetClick(presetKey)}>
+        <Button size="sm" variant="outline" style={{ fontSize: '12px', padding: '0px 12px' }} key={presetKey} onClick={() => handlePresetClick(presetKey)}>
           {config.presets[presetKey].title}
         </Button>
       ))}

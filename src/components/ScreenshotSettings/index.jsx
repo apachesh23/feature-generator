@@ -1,7 +1,7 @@
 // src/components/UX4/index.jsx
 import React from 'react';
 
-const UX4 = () => {
+const ScreenshotSettings = () => {
   return (
     <div
       style={{
@@ -18,4 +18,5 @@ const UX4 = () => {
   );
 };
 
-export default UX4;
+export default ScreenshotSettings;
+  

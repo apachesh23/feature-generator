@@ -95,7 +95,7 @@ const DataContainerOutput = ({ title }) => {
           <Group spacing="xs" style={{ flexGrow: 1, justifyContent: 'flex-end' }}>
             <CopyButton value={jsonValue} timeout={2000}>
               {({ copied, copy }) => (
-                <Tooltip color="blue" label={copied ? 'Copied' : 'Copy'} withArrow position="top" openDelay={300}>
+                <Tooltip color="blue" label={copied ? 'Copied' : 'Copy'} withArrow position="top" openDelay={200} transitionProps={{ transition: 'pop', duration: 200 }}>
                   <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
                     {copied ? (
                       <IconCheck style={{ width: rem(16) }} />
@@ -106,7 +106,7 @@ const DataContainerOutput = ({ title }) => {
                 </Tooltip>
               )}
             </CopyButton>
-            <Tooltip color="blue" openDelay={300} label="Reset all" withArrow position="top">
+            <Tooltip color="blue" openDelay={200} label="Reset all" withArrow position="top" transitionProps={{ transition: 'pop', duration: 200 }}>
               <Button onClick={handleReset} color="red" variant="outline" size="xs">
                 Reset
               </Button>

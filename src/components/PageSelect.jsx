@@ -2,7 +2,7 @@
 import React from 'react';
 import { Select, Group, rem } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconBook, IconBrush, IconCheck, IconComponents } from '@tabler/icons-react';
+import { IconBook, IconBrush, IconCheck, IconComponents, IconScreenshot } from '@tabler/icons-react';
 
 const icon = <IconComponents style={{ width: rem(16), height: rem(16) }} />;
 
@@ -16,6 +16,7 @@ const iconProps = {
 const icons = {
   ExperienceList: <IconBook {...iconProps} />,
   UX4: <IconBrush {...iconProps} />,
+  ScreenshotSettings: <IconScreenshot {...iconProps} />,
 };
 
 const renderSelectOption = ({ option, checked }) => (
@@ -39,6 +40,7 @@ const PageSelect = () => {
       data={[
         { value: 'ExperienceList', label: 'Experience List' },
         { value: 'UX4', label: 'UX4' },
+        { value: 'ScreenshotSettings', label: 'Screenshot Settings' },
       ]}
       value={selectedPage}
       onChange={handlePageChange}

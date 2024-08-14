@@ -5,77 +5,88 @@
       "title": "Model",
       "icon": "IconBox",
       "defaultOptions": ["viewIn2DContext", "multiProduct"],
-      "json_name": "model"
+      "json_name": "model",
+      "description": "Добавляет вкладку с режимом отображения Context Mode."
     },
     {
       "id": "ar",
       "title": "AR",
       "icon": "IconCamera",
       "defaultOptions": ["arImage", "arCamera"],
-      "json_name": "ar"
+      "json_name": "ar",
+      "description": "Добавляет вкладку с режимом фото примерки на себе (VTO)."
     },
     {
       "id": "arClip",
       "title": "AR Clip",
       "icon": "IconVideo",
       "defaultOptions": ["arClip", "arCamera"],
-      "json_name": "ar"
+      "json_name": "ar",
+      "description": "Добавляет вкладку с режимом записи коротких видео примерки на себе (VTO)."
     },
     {
       "id": "compare",
       "title": "Compare",
       "icon": "IconRuler",
       "defaultOptions": ["product", "history"],
-      "json_name": "compare"
+      "json_name": "compare",
+      "description": "Добавляет вкладку с режимом сравнения продукта с референсными элементами."
     },
     {
       "id": "roomView",
       "title": "Room View",
       "icon": "IconHome",
       "defaultOptions": ["viewIn3DContext"],
-      "json_name": "roomView"
+      "json_name": "roomView",
+      "description": "Добавляет вкладку с отображением настраиваемых текстур и размеров 3D комнаты."
     },
     {
       "id": "stagingRoom",
       "title": "Staging Room",
       "icon": "IconArmchair2",
       "defaultOptions": ["stagingRoom"],
-      "json_name": "stagingRoom"
+      "json_name": "stagingRoom",
+      "description": "Добавляет вкладку с отображением 2D-сцены с тенями под продуктами."
     },
     {
       "id": "stackable",
       "title": "Stackable",
       "icon": "IconStack2",
       "defaultOptions": ["catalogItems"],
-      "json_name": "stackable"
+      "json_name": "stackable",
+      "description": "Добавляет кнопку для стакинга нескольких продуктов."
     },
     {
       "id": "willItFit",
       "title": "Will It Fit",
       "icon": "IconBriefcase",
       "defaultOptions": ["willItFit"],
-      "json_name": "willItFit"
+      "json_name": "willItFit",
+      "description": "Добавляет вкладку с режимом наполнения сумки/рюкзака референсными элементами."
     },
     {
       "id": "deviceFit",
       "title": "Device Fit",
       "icon": "IconDevices",
       "defaultOptions": ["deviceFit"],
-      "json_name": "deviceFit"
+      "json_name": "deviceFit",
+      "description": "Добавляет вкладку с режимом сравнения продукта с электронными устройствами."
     },
     {
       "id": "wishlist",
       "title": "Wishlist",
       "icon": "IconHeart",
       "defaultOptions": ["wishListItems"],
-      "json_name": "wishlist"
+      "json_name": "wishlist",
+      "description": "Добавляет вкладку с рекомендациями похожих продуктов 'Вам также может понравиться'."
     },
     {
       "id": "disabled",
       "title": "Disabled",
       "icon": "IconCancel",
       "defaultOptions": [],
-      "json_name": "disabled"
+      "json_name": "disabled",
+      "description": "Пустышка которая ничего не делает. Можно использовать если нужно отключить какие-то опции, просто поместив их в несуществующий мод как 'Disabled'"
     }
   ],
   "options": [
@@ -96,6 +107,24 @@
     "airlines",
     "airlinesNavBar"
   ],
+  "explanations": {
+    "viewIn3DContext": "Включает использование ViewInContext референсных айтемов.",
+    "viewIn2DContext": "Включает отображение 2D контекст-модов.",
+    "multiProduct": "Включает отображение мультикатегорийных контекст-модов.",
+    "stagingRoom": "Включает использование контекст-модов с лейблом 'stagingRoom'.",
+    "arImage": "Включает использование фотографий в режиме VTO.",
+    "arClip": "Включает использование видео в режиме VTO.",
+    "arCamera": "Включает использование камеры телефона в режиме VTO.",
+    "product": "Включает отображение референсных айтемов.",
+    "history": "Включает отображение ранее просмотренных продуктов.",
+    "human": "Включает отображение человеческих силуэтов.",
+    "catalogItems": "Включает отображение каталог айтемов.",
+    "wishListItems": "Включает отображение рекомендованных продуктов с сайта клиента.",
+    "willItFit": "Включает отображение референсных айтемов из режима 'WillItFit'.",
+    "deviceFit": "Включает отображение референсных айтемов из режима 'DeviceFit'.",
+    "airlines": "Включает отображение чемоданов из режима 'Airlines'.",
+    "airlinesNavBar": "хз че делает, но пусть будет"
+  },
   "presets": {
     "preset1": {
       "title": "Model + AR",

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import * as TablerIcons from '@tabler/icons-react';
-import { Card, Text, Checkbox, Stack, Group, CloseButton, ActionIcon, rem, Box, Accordion, Tooltip } from '@mantine/core';
+import { Card, Text, Checkbox, Group, CloseButton, ActionIcon, Box, Accordion, Tooltip, Popover } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import config from '../config.json';
 
 const DataItem = ({ id, title, icon, defaultOptions = [], onRemove, onToggleOption, isActive, onToggleActive }) => {
@@ -20,36 +21,66 @@ const DataItem = ({ id, title, icon, defaultOptions = [], onRemove, onToggleOpti
   };
 
   const handleToggleAccordion = () => {
-    setOpened(!opened);
+    setOpened((prev) => !prev);
   };
 
   const handleMouseLeaveAccordion = () => {
     setOpened(false);
   };
 
+  const renderOptionWithTooltip = (option) => {
+    const [popoverOpened, { open, close }] = useDisclosure(false);
+  
+    return (
+      <Group key={option} spacing="xs" style={{ marginBottom: '8px', justifyContent: 'space-between' }}>
+        <Checkbox
+          label={option}
+          size="xs"
+          checked={activeOptions.includes(option)}
+          onChange={(event) => handleCheckboxChange(option, event.currentTarget.checked)}
+          style={{ flex: 1 }}
+        />
+        <Popover
+          width={200}
+          position="right"
+          offset={10}
+          withArrow
+          shadow="md"
+          opened={popoverOpened}
+        >
+          <Popover.Target>
+            <ActionIcon
+              size="sm"
+              radius="xl"
+              variant="light"
+              color="yellow"
+              style={{ marginLeft: '8px', transition: 'background-color 0.3s ease' }}
+              onMouseEnter={(e) => {
+                open();
+                e.currentTarget.style.backgroundColor = '#FFE9B2';
+              }}
+              onMouseLeave={(e) => {
+                close();
+                e.currentTarget.style.backgroundColor = '#FEF7E6';
+              }}
+            >
+              ?
+            </ActionIcon>
+          </Popover.Target>
+          <Popover.Dropdown style={{ pointerEvents: 'none' }}>
+            <Text size="xs">{config.explanations[option]}</Text>
+          </Popover.Dropdown>
+        </Popover>
+      </Group>
+    );
+  };
+  
   const renderActiveCheckboxes = () => {
-    return activeOptions.map((option) => (
-      <Checkbox
-        key={option}
-        label={option}
-        size="xs"
-        checked
-        style={{ marginBottom: '8px' }}  // Отступ между чекбоксами
-        onChange={(event) => handleCheckboxChange(option, event.currentTarget.checked)}
-      />
-    ));
+    return activeOptions.map(renderOptionWithTooltip);
   };
 
   const renderInactiveCheckboxes = () => {
-    return inactiveOptions.map((option) => (
-      <Checkbox
-        key={option}
-        label={option}
-        size="xs"
-        style={{ marginBottom: '8px' }}  // Отступ между чекбоксами
-        onChange={(event) => handleCheckboxChange(option, event.currentTarget.checked)}
-      />
-    ));
+    return inactiveOptions.map(renderOptionWithTooltip);
   };
 
   return (
@@ -58,18 +89,16 @@ const DataItem = ({ id, title, icon, defaultOptions = [], onRemove, onToggleOpti
       withBorder
       style={{
         color: '#332C2C',
-        borderColor: isActive ? '#228BE6' : '#E9E9E9',  // Синий бордер, если активен
-        borderWidth: isActive ? '1px' : '1px',  // Увеличенный бордер, если активен
+        borderColor: isActive ? '#228BE6' : '#E9E9E9',
+        borderWidth: isActive ? '1px' : '1px',
         position: 'relative',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Заголовок */}
       <Card.Section>
         <Group position="apart" style={{ borderBottom: '1px solid #E9E9E9', padding: '16px 16px', width: '100%', marginBottom: '8px' }}>
-          {/* Кнопка активации режима Active Experience */}
-          <Tooltip color="blue" openDelay={300} label="Active Experience" withArrow position="top">
+          <Tooltip color="blue" openDelay={200} label="Active Experience" withArrow position="top" transitionProps={{ transition: 'pop', duration: 200 }}>
             <ActionIcon
               color={isActive ? 'orange' : 'gray'}
               variant="transparent"
@@ -79,35 +108,29 @@ const DataItem = ({ id, title, icon, defaultOptions = [], onRemove, onToggleOpti
             </ActionIcon>
           </Tooltip>
 
-          {/* Иконка айтема и текст по центру */}
-          {/* <Tooltip color="blue" openDelay={300} label="Remove item" withArrow position="top"></Tooltip> */}
           <Group style={{ color: '#228BE6' }}>
-          
             {IconComponent && <IconComponent size={22} stroke={1} />}
             <Text weight={500} size="sm" style={{ fontFamily: 'Roboto Mono, monospace' }}>
               {title}
             </Text>
           </Group>
 
-          {/* Кнопка закрытия, видимая только при наведении */}
-            {isHovered && (
-              <Tooltip color="blue" openDelay={300} label="Remove item" withArrow position="top">
-                <CloseButton
-                  size="sm"
-                  onClick={() => onRemove(id)}
-                  style={{
-                    position: 'absolute',
-                    right: '16px',
-                    top: '16px',
-                  }}
-                />
-              </Tooltip>
-
-            )}
+          {isHovered && (
+            <Tooltip color="blue" openDelay={200} label="Remove item" withArrow position="top" transitionProps={{ transition: 'pop', duration: 200 }}>
+              <CloseButton
+                size="sm"
+                onClick={() => onRemove(id)}
+                style={{
+                  position: 'absolute',
+                  right: '16px',
+                  top: '16px',
+                }}
+              />
+            </Tooltip>
+          )}
         </Group>
       </Card.Section>
 
-      {/* Блок активных параметров */}
       <Card.Section>
         <Box
           className="no-drag"
@@ -120,7 +143,6 @@ const DataItem = ({ id, title, icon, defaultOptions = [], onRemove, onToggleOpti
         </Box>
       </Card.Section>
 
-      {/* Accordion с неактивными параметрами */}
       <Card.Section>
         <div ref={accordionRef} onMouseLeave={handleMouseLeaveAccordion}>
           <Accordion value={opened ? 'addMore' : null} variant="contained">
