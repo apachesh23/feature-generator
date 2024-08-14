@@ -1,11 +1,11 @@
-// src/components/DataContainer.jsx
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Paper, Group, Text, ScrollArea } from '@mantine/core';
 import * as TablerIcons from '@tabler/icons-react';
+import { List, arrayMove } from 'react-movable';
 import config from '../config.json';
 import DataItem from './DataItem';
-import { addItem, removeItem, toggleItemOption, toggleActiveExperience } from '../../../redux/actions/experienceListActions';
+import { addItem, removeItem, toggleItemOption, toggleActiveExperience, reorderItems } from '../../../redux/actions/experienceListActions';
 import AddItemButton from '../AddItemButton';
 
 const DataContainer = ({ title, type }) => {
@@ -44,6 +44,10 @@ const DataContainer = ({ title, type }) => {
     dispatch(toggleActiveExperience(itemId, type));
   };
 
+  const handleReorderItems = ({ oldIndex, newIndex }) => {
+    dispatch(reorderItems(arrayMove(items, oldIndex, newIndex), type));
+  };
+
   const addedItemIds = items.map(item => item.id);
 
   return (
@@ -74,21 +78,26 @@ const DataContainer = ({ title, type }) => {
           </Group>
         </Group>
         <ScrollArea offsetScrollbars scrollbarSize={4} style={{ height: 660 }}>
-          <Stack spacing="md" p="md">
-            {items.map((item) => (
-              <DataItem
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                icon={item.icon}
-                defaultOptions={item.selectedOptions}
-                isActive={activeExperience === item.id}
-                onRemove={handleRemoveItem}
-                onToggleOption={handleToggleOption}
-                onToggleActive={() => handleToggleActive(item.id)}
-              />
-            ))}
-          </Stack>
+          <List
+            values={items}
+            onChange={handleReorderItems}
+            lockVertically
+            renderList={({ children, props }) => <Stack spacing="md" p="md" {...props}>{children}</Stack>}
+            renderItem={({ value, props }) => (
+              <div {...props} key={value.id}>
+                <DataItem
+                  id={value.id}
+                  title={value.title}
+                  icon={value.icon}
+                  defaultOptions={value.selectedOptions}
+                  isActive={activeExperience === value.id}
+                  onRemove={handleRemoveItem}
+                  onToggleOption={handleToggleOption}
+                  onToggleActive={() => handleToggleActive(value.id)}
+                />
+              </div>
+            )}
+          />
         </ScrollArea>
       </Stack>
     </Paper>

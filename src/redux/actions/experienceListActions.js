@@ -32,3 +32,8 @@ export const toggleActiveExperience = (itemId, containerType) => ({
   type: 'TOGGLE_ACTIVE_EXPERIENCE',
   payload: { itemId, containerType },
 });
+
+export const reorderItems = (items, containerType) => ({
+  type: 'REORDER_ITEMS',
+  payload: { items, containerType },
+});

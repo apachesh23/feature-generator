@@ -112,6 +112,20 @@ const experienceListReducer = (state = initialState, action) => {
       }
       return state;
 
+    case 'REORDER_ITEMS':
+      if (action.payload.containerType === 'desktop') {
+        return {
+          ...state,
+          desktopItems: action.payload.items,
+        };
+      } else if (action.payload.containerType === 'mobile') {
+        return {
+          ...state,
+          mobileItems: action.payload.items,
+        };
+      }
+      return state;
+
     default:
       return state;
   }
